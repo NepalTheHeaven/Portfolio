@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nabin-paudel-portfolio.nirajpaudel944.chatgpt.site/sitemap.xml
