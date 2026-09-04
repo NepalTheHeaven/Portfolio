@@ -17,7 +17,7 @@ export function SideRail() {
       <div className="rail-socials" aria-label="Social links">
         <span aria-label="GitHub link coming soon"><GitFork aria-hidden="true" /></span>
         <span aria-label="LinkedIn link coming soon"><BriefcaseBusiness aria-hidden="true" /></span>
-        <NavLink to="/contact" aria-label="Contact Nabin"><Mail aria-hidden="true" /></NavLink>
+        <NavLink to="/contact" aria-label="Contact Nabin" data-magnetic><Mail aria-hidden="true" /></NavLink>
       </div>
     </aside>
   )

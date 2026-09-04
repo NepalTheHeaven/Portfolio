@@ -17,7 +17,7 @@ export function AppsPage() {
       <div className="apps-grid">
         {appProjects.map((project, index) => (
           <Reveal key={project.slug}>
-            <article className="app-card">
+            <article className="app-card" data-cursor-label="VIEW">
               {project.isNationalWinner && <AchievementBadge />}
               <div className="app-card-copy">
                 <p className="project-index">Project {String(index + 1).padStart(2, '0')}</p>

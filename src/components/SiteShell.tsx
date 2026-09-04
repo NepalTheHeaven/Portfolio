@@ -2,6 +2,7 @@ import { useEffect, type ReactNode } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { SiteHeader } from './SiteHeader'
 import { SideRail } from './SideRail'
+import { CustomCursor } from './ui/CustomCursor'
 
 interface SiteShellProps {
   children?: ReactNode
@@ -17,6 +18,7 @@ export function SiteShell({ children }: SiteShellProps) {
       <SiteHeader />
       <SideRail />
       <main id="main-content" tabIndex={-1}>{children ?? <Outlet />}</main>
+      <CustomCursor />
     </div>
   )
 }

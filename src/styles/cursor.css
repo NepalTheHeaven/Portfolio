@@ -1,0 +1,91 @@
+/* Magnetic glow cursor — dark-violet / metallic identity.
+   Only ever visible on hover-capable fine-pointer devices with motion allowed
+   (JavaScript adds `.cursor-enabled` to <html> once it has mounted + confirmed support). */
+
+:root {
+  --cursor-dot: #f4f0fa;
+  --cursor-ring: rgba(157, 98, 255, 0.55);
+  --cursor-glow: 0 0 14px 1px rgba(157, 98, 255, 0.16);
+}
+
+.cursor-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.cursor-root,
+.cursor-ring,
+.cursor-dot,
+.cursor-label {
+  pointer-events: none;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--cursor-ring);
+  border-radius: 50%;
+  box-shadow: var(--cursor-glow);
+  will-change: transform;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cursor-dot);
+  box-shadow: 0 0 6px rgba(244, 240, 250, 0.5);
+  will-change: transform;
+}
+
+.cursor-label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--cursor-dot);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  user-select: none;
+}
+
+/* Suppress the OS cursor only after JS confirms the custom cursor is live.
+   `.cursor-native` is toggled back on over form fields and selectable text. */
+html.cursor-enabled,
+html.cursor-enabled * {
+  cursor: none !important;
+}
+
+html.cursor-enabled.cursor-native,
+html.cursor-enabled.cursor-native * {
+  cursor: auto !important;
+}
+
+/* Hard stops — the component already returns null in these cases, this is a safety net. */
+@media (hover: none), (pointer: coarse) {
+  .cursor-root {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-root {
+    display: none !important;
+  }
+}

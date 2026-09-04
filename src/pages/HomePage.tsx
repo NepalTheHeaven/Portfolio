@@ -28,10 +28,10 @@ export function HomePage() {
           <p className="hero-role">{portfolio.hero.supportingLine}</p>
           <p className="hero-intro">{portfolio.hero.introduction}</p>
           <div className="hero-actions">
-            <Link className="button button-primary" to="/work">
+            <Link className="button button-primary" to="/work" data-magnetic>
               <Play aria-hidden="true" size={17} fill="currentColor" /> View showreel
             </Link>
-            <Link className="button button-secondary" to="/work">
+            <Link className="button button-secondary" to="/work" data-magnetic>
               Explore work <ArrowRight aria-hidden="true" size={18} />
             </Link>
           </div>
@@ -40,7 +40,7 @@ export function HomePage() {
 
         <div className="hero-showcase" aria-label="Selected portfolio work">
           <div className="showcase-glow" aria-hidden="true" />
-          <Link className="showcase-card showcase-edit" to="/work/edit-01">
+          <Link className="showcase-card showcase-edit" to="/work/edit-01" data-cursor-label="VIEW">
             <div className="card-number">01 / EDIT</div>
             <div className="edit-visual">
               <div className="edit-scanline" />
@@ -52,7 +52,7 @@ export function HomePage() {
               <ArrowDownRight aria-hidden="true" />
             </div>
           </Link>
-          <Link className="showcase-card showcase-app" to="/apps/samadhan">
+          <Link className="showcase-card showcase-app" to="/apps/samadhan" data-cursor-label="VIEW">
             <div className="card-number">02 / APP</div>
             <div className="phone-preview">
               <img src="/images/projects/samadhan/Screenshot_20260904_153938_Expo Go.jpg.jpeg" alt="Samadhan mobile application interface" />

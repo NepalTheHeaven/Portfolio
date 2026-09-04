@@ -63,7 +63,7 @@ export function BeforeAfterVideo({ beforeVideo, afterVideo, poster, title, descr
         <div className="after-layer"><video ref={afterRef} src={afterVideo} poster={poster} preload="metadata" muted={muted} playsInline aria-label={`${title} — ${afterLabel}`} onTimeUpdate={() => { if (afterRef.current && beforeRef.current) syncTime(afterRef.current, beforeRef.current) }} onPause={() => { if (!syncingRef.current) beforeRef.current?.pause() }} /></div>
         <span className="comparison-label label-before">{beforeLabel}</span><span className="comparison-label label-after">{afterLabel}</span>
         <div className="comparison-line" aria-hidden="true"><span>‹ ›</span></div>
-        <input className="comparison-range" type="range" min="0" max="100" value={position} onChange={updatePosition} onPointerDown={announceInteraction} aria-label={`Reveal ${afterLabel}; currently ${Math.round(position)} percent`} />
+        <input className="comparison-range" type="range" min="0" max="100" value={position} onChange={updatePosition} onPointerDown={announceInteraction} data-cursor-label="DRAG" aria-label={`Reveal ${afterLabel}; currently ${Math.round(position)} percent`} />
         <div className="comparison-controls">
           <button type="button" onClick={togglePlayback} aria-label={playing ? 'Pause both videos' : 'Play both videos'}>{playing ? <Pause /> : <Play fill="currentColor" />}</button>
           <button type="button" onClick={replay} aria-label="Replay comparison"><RotateCcw /></button>

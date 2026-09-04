@@ -58,6 +58,7 @@ export function VideoPlayer({ src, poster, title, compact = false, previewOnHove
   return (
     <div
       className={`video-shell ${compact ? 'is-compact' : ''}`}
+      data-cursor-label="PLAY"
       onMouseEnter={() => { if (previewOnHover && canHover()) void play() }}
       onMouseLeave={() => { if (previewOnHover && canHover()) videoRef.current?.pause() }}
     >

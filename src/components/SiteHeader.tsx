@@ -43,13 +43,13 @@ export function SiteHeader() {
 
       <nav className="desktop-nav" aria-label="Primary navigation">
         {portfolio.navigation.slice(1).map((item) => (
-          <NavLink key={item.href} to={item.href}>
+          <NavLink key={item.href} to={item.href} data-magnetic>
             {item.label}
           </NavLink>
         ))}
       </nav>
 
-      <Link className="header-contact" to="/contact" aria-label="Start a project">
+      <Link className="header-contact" to="/contact" aria-label="Start a project" data-magnetic>
         <Mail aria-hidden="true" size={19} />
       </Link>
 

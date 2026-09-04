@@ -7,8 +7,8 @@ interface VideoCardProps { project: VideoProject; index: number }
 
 export function VideoCard({ project, index }: VideoCardProps) {
   return (
-    <article className="video-card">
-      <div className={`video-card-media placeholder-tone-${(index % 4) + 1}`}>
+    <article className="video-card" data-cursor-label="VIEW">
+      <div className={`video-card-media placeholder-tone-${(index % 4) + 1}`} data-cursor-label="PLAY">
         {project.video ? <VideoPlayer src={project.video} poster={project.poster} title={project.title} compact previewOnHover /> : <div className="motion-placeholder"><span>{String(index + 1).padStart(2, '0')}</span><b>Media pending</b></div>}
         <span className="duration-chip">{project.duration}</span>
       </div>
