@@ -109,7 +109,7 @@ export const appProjects: AppProject[] = [
 ]
 
 export const portfolio: PortfolioData = {
-  siteUrl: 'https://nabin-paudel-portfolio.major-grebe-8484.chatgpt.site',
+  siteUrl: 'https://nabin-paudel-portfolio.nirajpaudel944.chatgpt.site',
   personal: {
     name: 'Nabin Paudel',
     monogram: 'NP',
