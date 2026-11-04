@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nepaltheheaven.github.io/Portfolio/sitemap.xml
