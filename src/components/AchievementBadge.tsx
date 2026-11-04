@@ -1,9 +1,11 @@
+import { withBase } from '../data/portfolio'
+
 export function AchievementBadge() {
   return (
     <div className="achievement-badge">
       <img
         className="achievement-badge-trophy"
-        src="/images/achievements/lumbinix-trophy.png"
+        src={withBase('/images/achievements/lumbinix-trophy.png')}
         alt=""
         aria-hidden="true"
         loading="lazy"

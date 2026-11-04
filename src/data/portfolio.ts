@@ -1,21 +1,27 @@
 import type { AppProject, PortfolioData, VideoProject } from '../types/portfolio'
 
+const baseUrl = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`
+
+export const withBase = (path: string) => `${baseUrl}${path.replace(/^\//, '')}`
+
 const samadhanScreenshots = [
-  '/images/projects/samadhan/Screenshot_20260904_153755_Expo Go.jpg.jpeg',
-  '/images/projects/samadhan/Screenshot_20260904_153923_Expo Go.jpg.jpeg',
-  '/images/projects/samadhan/Screenshot_20260904_153938_Expo Go.jpg.jpeg',
-  '/images/projects/samadhan/Screenshot_20260904_153952_Expo Go.jpg.jpeg',
-  '/images/projects/samadhan/Screenshot_20260904_154108_Expo Go.jpg.jpeg',
-  '/images/projects/samadhan/Screenshot_20260904_154124_Expo Go.jpg.jpeg',
+  withBase('/images/projects/samadhan/Screenshot_20260904_153755_Expo Go.jpg.jpeg'),
+  withBase('/images/projects/samadhan/Screenshot_20260904_153923_Expo Go.jpg.jpeg'),
+  withBase('/images/projects/samadhan/Screenshot_20260904_153938_Expo Go.jpg.jpeg'),
+  withBase('/images/projects/samadhan/Screenshot_20260904_153952_Expo Go.jpg.jpeg'),
+  withBase('/images/projects/samadhan/Screenshot_20260904_154108_Expo Go.jpg.jpeg'),
+  withBase('/images/projects/samadhan/Screenshot_20260904_154124_Expo Go.jpg.jpeg'),
 ]
 
 const winnerScreenshots = [
-  '/images/projects/winning project/01-tirtha-map.png',
-  '/images/projects/winning project/02-tirtha-destination-sheet.png',
-  '/images/projects/winning project/03-saksi-witness-top.png',
-  '/images/projects/winning project/04-saksi-witness-full.png',
-  '/images/projects/winning project/05-dhamma-questions.png',
-  '/images/projects/winning project/06-saksi-alignment.png',
+  withBase('/images/projects/winning project/01-tirtha-map.png'),
+  withBase('/images/projects/winning project/02-tirtha-destination-sheet.png'),
+  withBase('/images/projects/winning project/03-saksi-witness-top.png'),
+  withBase('/images/projects/winning project/04-saksi-witness-full.png'),
+  withBase('/images/projects/winning project/05-dhamma-questions.png'),
+  withBase('/images/projects/winning project/06-saksi-alignment.png'),
 ]
 
 export const videoProjects: VideoProject[] = [
@@ -27,10 +33,10 @@ export const videoProjects: VideoProject[] = [
     date: 'TODO: Add completion date',
     description: 'A real before-and-after edit is available. Add the project story and final category here.',
     tools: ['DaVinci Resolve'],
-    video: '/videos/edits/edit-01-after.mp4',
+    video: withBase('/videos/edits/edit-01-after.mp4'),
     beforeAfter: {
-      beforeVideo: '/videos/edits/edit-01-before-web.mp4',
-      afterVideo: '/videos/edits/edit-01-after.mp4',
+      beforeVideo: withBase('/videos/edits/edit-01-before-web.mp4'),
+      afterVideo: withBase('/videos/edits/edit-01-after.mp4'),
       beforeLabel: 'Original',
       afterLabel: 'Final grade',
     },
@@ -78,7 +84,7 @@ export const appProjects: AppProject[] = [
     achievement: 'TODO: Add achievement, if any',
     isNationalWinner: false,
     screenshots: samadhanScreenshots,
-    demoVideo: '/videos/apps/samadhan.mp4',
+    demoVideo: withBase('/videos/apps/samadhan.mp4'),
     githubUrl: 'TODO: Add GitHub URL',
     demoUrl: 'TODO: Add APK or live-demo URL',
     architecture: 'TODO: Add the real technical architecture.',
@@ -109,7 +115,7 @@ export const appProjects: AppProject[] = [
 ]
 
 export const portfolio: PortfolioData = {
-  siteUrl: 'https://nabin-paudel-portfolio.nirajpaudel944.chatgpt.site',
+  siteUrl: 'https://nepaltheheaven.github.io/Portfolio',
   personal: {
     name: 'Nabin Paudel',
     monogram: 'NP',
@@ -151,5 +157,5 @@ export const portfolio: PortfolioData = {
     { title: 'Video editing', description: 'Cinematic edits, short-form reels, promotional video, colour grading, and sound-led storytelling.', type: 'video' },
     { title: 'Flutter development', description: 'Cross-platform mobile application development and precise mobile UI implementation.', type: 'development' },
   ],
-  resumePath: '/resume/TODO-add-nabin-paudel-resume.pdf',
+  resumePath: withBase('/resume/TODO-add-nabin-paudel-resume.pdf'),
 }

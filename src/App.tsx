@@ -9,9 +9,11 @@ import { StoryPage } from './pages/StoryPage'
 import { ContactPage } from './pages/ContactPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 
+const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
+
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={routerBasename}>
       <Routes>
         <Route element={<SiteShell />}>
           <Route index element={<HomePage />} />

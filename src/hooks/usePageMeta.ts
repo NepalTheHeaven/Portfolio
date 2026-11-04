@@ -34,11 +34,12 @@ export function usePageMeta({ title, description, structuredData, image = DEFAUL
     upsertMeta('twitter:description', description)
     const canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]') ?? document.createElement('link')
     canonical.rel = 'canonical'
-    canonical.href = `${SITE_ORIGIN}${window.location.pathname}`
+    canonical.href = `${SITE_ORIGIN}${window.location.pathname}`.replace('/Portfolio/Portfolio', '/Portfolio')
     if (!canonical.parentNode) document.head.append(canonical)
     if (image) {
-      upsertMeta('og:image', image, true)
-      upsertMeta('twitter:image', image)
+      const resolvedImage = image.replace('/Portfolio/Portfolio/', '/Portfolio/')
+      upsertMeta('og:image', resolvedImage, true)
+      upsertMeta('twitter:image', resolvedImage)
     } else {
       document.head.querySelector('meta[property="og:image"]')?.remove()
       document.head.querySelector('meta[name="twitter:image"]')?.remove()

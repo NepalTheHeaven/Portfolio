@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { MetallicHeading } from '../components/MetallicHeading'
-import { portfolio } from '../data/portfolio'
+import { portfolio, withBase } from '../data/portfolio'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { SiteFooter } from '../components/SiteFooter'
 
@@ -55,7 +55,7 @@ export function HomePage() {
           <Link className="showcase-card showcase-app" to="/apps/samadhan" data-cursor-label="VIEW">
             <div className="card-number">02 / APP</div>
             <div className="phone-preview">
-              <img src="/images/projects/samadhan/Screenshot_20260904_153938_Expo Go.jpg.jpeg" alt="Samadhan mobile application interface" />
+              <img src={withBase('/images/projects/samadhan/Screenshot_20260904_153938_Expo Go.jpg.jpeg')} alt="Samadhan mobile application interface" />
             </div>
             <div className="showcase-meta">
               <div><small>Mobile product</small><strong>Samadhan</strong></div>
