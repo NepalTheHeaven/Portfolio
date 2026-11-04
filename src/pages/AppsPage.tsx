@@ -9,8 +9,16 @@ import { appProjects } from '../data/portfolio'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { Link } from 'react-router-dom'
 
-export function AppsPage() {
-  usePageMeta({ title: 'Products with Purpose', description: 'Mobile application projects built by Nabin Paudel, including a national-level hackathon winning project.' })
+interface AppsPageProps {
+  embedded?: boolean
+}
+
+export function AppsPage({ embedded = false }: AppsPageProps) {
+  usePageMeta({
+    title: 'Products with Purpose',
+    description: 'Mobile application projects built by Nabin Paudel, including a national-level hackathon winning project.',
+    disabled: embedded,
+  })
   return (
     <div className="apps-page page-enter">
       <PageIntro label="03 / Mobile applications" title="Products with" accent="Purpose" align="center" description="Two hackathon products. Different problems, one commitment to useful and carefully made experiences." />
@@ -39,7 +47,7 @@ export function AppsPage() {
           </Reveal>
         ))}
       </div>
-      <SiteFooter />
+      {!embedded && <SiteFooter />}
     </div>
   )
 }

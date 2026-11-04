@@ -6,6 +6,7 @@ interface PageMeta {
   description: string
   structuredData?: Record<string, unknown>
   image?: string | null
+  disabled?: boolean
 }
 
 const SITE_ORIGIN = portfolio.siteUrl
@@ -29,8 +30,9 @@ function upsertMeta(name: string, content: string, property = false) {
   element.content = content
 }
 
-export function usePageMeta({ title, description, structuredData, image = DEFAULT_IMAGE }: PageMeta) {
+export function usePageMeta({ title, description, structuredData, image = DEFAULT_IMAGE, disabled = false }: PageMeta) {
   useEffect(() => {
+    if (disabled) return
     document.title = `${title} — Nabin Paudel`
     upsertMeta('description', description)
     upsertMeta('og:title', document.title, true)
@@ -62,5 +64,5 @@ export function usePageMeta({ title, description, structuredData, image = DEFAUL
       document.head.append(script)
     }
     return () => document.getElementById(id)?.remove()
-  }, [description, image, structuredData, title])
+  }, [description, disabled, image, structuredData, title])
 }

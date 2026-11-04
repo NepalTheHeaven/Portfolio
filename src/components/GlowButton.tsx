@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { isSectionRoute, scrollToSectionByRoute } from '../context/FlowNavigationContext'
 
 interface GlowButtonProps {
   to: string
@@ -34,5 +35,16 @@ export function GlowButton({ to, children, secondary = false, external = false, 
     'data-cursor-label': cursorLabel ?? (external ? 'OPEN' : undefined),
   }
   if (external) return <a className={className} href={to} target="_blank" rel="noopener noreferrer" {...cursorProps}>{children}<ArrowRight aria-hidden="true" size={17} /></a>
-  return <Link className={className} to={to} {...cursorProps}>{children}<ArrowRight aria-hidden="true" size={17} /></Link>
+  return (
+    <Link
+      className={className}
+      to={to}
+      onClick={() => {
+        if (isSectionRoute(to)) scrollToSectionByRoute(to)
+      }}
+      {...cursorProps}
+    >
+      {children}<ArrowRight aria-hidden="true" size={17} />
+    </Link>
+  )
 }

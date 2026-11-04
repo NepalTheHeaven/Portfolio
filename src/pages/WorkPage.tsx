@@ -11,11 +11,19 @@ import { usePageMeta } from '../hooks/usePageMeta'
 
 const filters: Array<'All' | Exclude<WorkCategory, 'Uncategorised'>> = ['All', 'Reels', 'Cinematic', 'Commercial', 'Motion Graphics']
 
-export function WorkPage() {
+interface WorkPageProps {
+  embedded?: boolean
+}
+
+export function WorkPage({ embedded = false }: WorkPageProps) {
   const [filter, setFilter] = useState<(typeof filters)[number]>('All')
   const projects = useMemo(() => filter === 'All' ? videoProjects : videoProjects.filter((project) => project.category === filter), [filter])
   const featured = videoProjects[0]
-  usePageMeta({ title: 'Selected Motion', description: 'Video-editing work by Nabin Paudel: cinematic stories, short-form edits, colour grading, sound design, and motion.' })
+  usePageMeta({
+    title: 'Selected Motion',
+    description: 'Video-editing work by Nabin Paudel: cinematic stories, short-form edits, colour grading, sound design, and motion.',
+    disabled: embedded,
+  })
 
   return (
     <div className="work-page page-enter">
@@ -44,7 +52,7 @@ export function WorkPage() {
           <BeforeAfterVideo {...featured.beforeAfter} title="Edit project 01 comparison" description={featured.description} orientation="wide" />
         </Reveal>
       )}
-      <SiteFooter />
+      {!embedded && <SiteFooter />}
     </div>
   )
 }

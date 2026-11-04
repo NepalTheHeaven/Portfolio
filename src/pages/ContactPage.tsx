@@ -5,8 +5,16 @@ import { SiteFooter } from '../components/SiteFooter'
 import { portfolio } from '../data/portfolio'
 import { usePageMeta } from '../hooks/usePageMeta'
 
-export function ContactPage() {
-  usePageMeta({ title: 'Let’s Create Something That Moves', description: 'Contact Nabin Paudel for video editing, colour grading, Flutter development, and mobile UI implementation.' })
+interface ContactPageProps {
+  embedded?: boolean
+}
+
+export function ContactPage({ embedded = false }: ContactPageProps) {
+  usePageMeta({
+    title: 'Let’s Create Something That Moves',
+    description: 'Contact Nabin Paudel for video editing, colour grading, Flutter development, and mobile UI implementation.',
+    disabled: embedded,
+  })
   return (
     <div className="contact-page page-enter">
       <section className="contact-layout">

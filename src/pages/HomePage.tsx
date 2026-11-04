@@ -7,15 +7,25 @@ import { MetallicHeading } from '../components/MetallicHeading'
 import { portfolio, withBase } from '../data/portfolio'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { SiteFooter } from '../components/SiteFooter'
+import { scrollToSectionByRoute } from '../context/FlowNavigationContext'
 
-export function HomePage() {
+interface HomePageProps {
+  embedded?: boolean
+}
+
+export function HomePage({ embedded = false }: HomePageProps) {
   const root = useRef<HTMLDivElement>(null)
   useGSAP(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     gsap.from('.hero-line-mask > span', { yPercent: 115, opacity: 0, duration: 1, stagger: .08, ease: 'power4.out' })
     gsap.from('.home-copy > :not(.home-title)', { y: 15, opacity: 0, duration: .65, stagger: .06, delay: .3, ease: 'power3.out' })
   }, { scope: root })
-  usePageMeta({ title: 'Video Editor & Mobile App Developer', description: 'Nabin Paudel cuts stories and builds mobile products — video editing and application development from Nepal.', structuredData: { '@context': 'https://schema.org', '@type': 'Person', name: 'Nabin Paudel', jobTitle: ['Video Editor', 'Mobile Application Developer'], address: { '@type': 'PostalAddress', addressCountry: 'NP' } } })
+  usePageMeta({
+    title: 'Video Editor & Mobile App Developer',
+    description: 'Nabin Paudel cuts stories and builds mobile products — video editing and application development from Nepal.',
+    structuredData: { '@context': 'https://schema.org', '@type': 'Person', name: 'Nabin Paudel', jobTitle: ['Video Editor', 'Mobile Application Developer'], address: { '@type': 'PostalAddress', addressCountry: 'NP' } },
+    disabled: embedded,
+  })
   return (
     <div ref={root} className="home-page page-enter">
       <section className="home-hero" aria-labelledby="home-title">
@@ -28,10 +38,10 @@ export function HomePage() {
           <p className="hero-role">{portfolio.hero.supportingLine}</p>
           <p className="hero-intro">{portfolio.hero.introduction}</p>
           <div className="hero-actions">
-            <Link className="button button-primary" to="/work" data-magnetic>
+            <Link className="button button-primary" to="/work" onClick={() => scrollToSectionByRoute('/work')} data-magnetic>
               <Play aria-hidden="true" size={17} fill="currentColor" /> View showreel
             </Link>
-            <Link className="button button-secondary" to="/work" data-magnetic>
+            <Link className="button button-secondary" to="/work" onClick={() => scrollToSectionByRoute('/work')} data-magnetic>
               Explore work <ArrowRight aria-hidden="true" size={18} />
             </Link>
           </div>
@@ -64,11 +74,11 @@ export function HomePage() {
           </Link>
         </div>
       </section>
-      <a className="scroll-cue" href="#selected-work"><span>Scroll to explore</span><ArrowDownRight aria-hidden="true" /></a>
+      <a className="scroll-cue" href="#section-work" onClick={(e) => { e.preventDefault(); scrollToSectionByRoute('/work') }}><span>Scroll to explore</span><ArrowDownRight aria-hidden="true" /></a>
       <section className="home-next" id="selected-work" aria-label="Selected disciplines">
         <p>Editing precision</p><span aria-hidden="true">×</span><p>Product thinking</p><span aria-hidden="true">×</span><p>Meaningful outcomes</p>
       </section>
-      <SiteFooter />
+      {!embedded && <SiteFooter />}
     </div>
   )
 }

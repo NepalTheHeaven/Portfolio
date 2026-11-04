@@ -9,8 +9,16 @@ import { Timeline } from '../components/Timeline'
 import { portfolio } from '../data/portfolio'
 import { usePageMeta } from '../hooks/usePageMeta'
 
-export function StoryPage() {
-  usePageMeta({ title: 'Between Frames & Functions', description: 'The personal journey, skills, tools, and approach of Nabin Paudel — video editor, IT student, and mobile app developer.' })
+interface StoryPageProps {
+  embedded?: boolean
+}
+
+export function StoryPage({ embedded = false }: StoryPageProps) {
+  usePageMeta({
+    title: 'Between Frames & Functions',
+    description: 'The personal journey, skills, tools, and approach of Nabin Paudel — video editor, IT student, and mobile app developer.',
+    disabled: embedded,
+  })
   return (
     <div className="story-page page-enter">
       <section className="story-hero">
@@ -29,7 +37,7 @@ export function StoryPage() {
       <Reveal className="skills-section"><div className="section-heading"><div><p className="section-label">Capabilities</p><h2>One toolkit, two disciplines.</h2></div><p>The confirmed skills below are editable from one central content file.</p></div><div className="skill-grid">{portfolio.skillGroups.map((group, index) => <SkillGroup key={group.title} group={group} index={index} />)}</div></Reveal>
       <section className="resume-cta"><div><p className="section-label">Curriculum vitae</p><h2>Need the complete picture?</h2><p>The resume file is ready to be linked as soon as the real PDF is added.</p></div><GlowButton to={portfolio.resumePath} disabled><Download aria-hidden="true" size={17} /> Resume TODO</GlowButton></section>
       <section className="contact-cta"><p className="section-label">The next chapter</p><h2>Let’s build something that moves people.</h2><GlowButton to="/contact">Start a conversation</GlowButton></section>
-      <SiteFooter />
+      {!embedded && <SiteFooter />}
     </div>
   )
 }
