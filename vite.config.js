@@ -17,9 +17,34 @@ const staticRoutes = [
   'contact',
 ]
 
+const PRODUCTION_CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'report-sample'",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com",
+  "img-src 'self' data: https://nepaltheheaven.github.io",
+  "media-src 'self'",
+  "connect-src 'self'",
+  "worker-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  'upgrade-insecure-requests',
+].join('; ')
+
 function githubPagesSpaPlugin() {
   return {
     name: 'github-pages-spa',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        if (ctx.server) return html
+        return html.replace(
+          '<meta charset="UTF-8" />',
+          `<meta charset="UTF-8" />\n    <meta http-equiv="Content-Security-Policy" content="${PRODUCTION_CSP}" />`,
+        )
+      },
+    },
     closeBundle() {
       const outDir = resolve('dist')
       const indexHtml = resolve(outDir, 'index.html')

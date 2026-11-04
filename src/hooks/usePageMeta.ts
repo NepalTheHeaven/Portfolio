@@ -11,6 +11,13 @@ interface PageMeta {
 const SITE_ORIGIN = portfolio.siteUrl
 const DEFAULT_IMAGE = `${SITE_ORIGIN}/og-placeholder.svg`
 
+function serializeSafeJsonLd(data: Record<string, unknown>): string {
+  return JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+}
+
 function upsertMeta(name: string, content: string, property = false) {
   const selector = property ? `meta[property="${name}"]` : `meta[name="${name}"]`
   let element = document.head.querySelector<HTMLMetaElement>(selector)
@@ -51,7 +58,7 @@ export function usePageMeta({ title, description, structuredData, image = DEFAUL
       const script = document.createElement('script')
       script.id = id
       script.type = 'application/ld+json'
-      script.text = JSON.stringify(structuredData)
+      script.textContent = serializeSafeJsonLd(structuredData)
       document.head.append(script)
     }
     return () => document.getElementById(id)?.remove()

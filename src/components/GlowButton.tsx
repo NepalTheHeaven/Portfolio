@@ -14,14 +14,25 @@ interface GlowButtonProps {
   cursorLabel?: string
 }
 
+function isSafeExternalUrl(rawUrl: string): boolean {
+  try {
+    const parsed = new URL(rawUrl)
+    return parsed.protocol === 'https:' || parsed.protocol === 'http:'
+  } catch {
+    return false
+  }
+}
+
 export function GlowButton({ to, children, secondary = false, external = false, disabled = false, magnetic, cursorLabel }: GlowButtonProps) {
-  const className = `button ${secondary ? 'button-secondary' : 'button-primary'} ${disabled ? 'is-disabled' : ''}`
-  if (disabled) return <span className={className} aria-disabled="true">{children}</span>
+  const isBlockedExternal = external && !isSafeExternalUrl(to)
+  const isDisabled = disabled || isBlockedExternal
+  const className = `button ${secondary ? 'button-secondary' : 'button-primary'} ${isDisabled ? 'is-disabled' : ''}`
+  if (isDisabled) return <span className={className} aria-disabled="true">{children}</span>
 
   const cursorProps = {
     'data-magnetic': (magnetic ?? true) ? '' : undefined,
     'data-cursor-label': cursorLabel ?? (external ? 'OPEN' : undefined),
   }
-  if (external) return <a className={className} href={to} target="_blank" rel="noreferrer" {...cursorProps}>{children}<ArrowRight aria-hidden="true" size={17} /></a>
+  if (external) return <a className={className} href={to} target="_blank" rel="noopener noreferrer" {...cursorProps}>{children}<ArrowRight aria-hidden="true" size={17} /></a>
   return <Link className={className} to={to} {...cursorProps}>{children}<ArrowRight aria-hidden="true" size={17} /></Link>
 }

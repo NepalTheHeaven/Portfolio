@@ -12,6 +12,14 @@ dist
 dist-ssr
 *.local
 
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Internal tooling metadata
+.openai/
+
 # Local source masters and implementation references (not shipped to hosting)
 design-reference/
 source-media/
