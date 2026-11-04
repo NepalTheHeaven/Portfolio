@@ -94,9 +94,15 @@ export function ContactForm() {
         {errors.projectType && <span className="field-error" id="projectType-error">{errors.projectType}</span>}
       </div>
       <div className="field">
-        <label htmlFor="budget">Budget <span aria-hidden="true">*</span></label>
+        <label htmlFor="budget">Budget (NPR) <span aria-hidden="true">*</span></label>
         <select id="budget" name="budget" required defaultValue="" aria-invalid={Boolean(errors.budget)} aria-describedby={errors.budget ? 'budget-error' : undefined} onChange={() => clearError('budget')} onBlur={checkOnBlur('budget')}>
-          <option value="" disabled>Select budget range</option><option>Under $250</option><option>$250–$750</option><option>$750–$1,500</option><option>$1,500+</option><option>Let’s discuss</option>
+          <option value="" disabled>Select budget range</option>
+          <option>NPR 1,000–2,500</option>
+          <option>NPR 2,500–5,000</option>
+          <option>NPR 5,000–7,500</option>
+          <option>NPR 7,500–10,000</option>
+          <option>NPR 10,000+</option>
+          <option>Let’s discuss</option>
         </select>
         {errors.budget && <span className="field-error" id="budget-error">{errors.budget}</span>}
       </div>
