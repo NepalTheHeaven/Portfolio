@@ -1,12 +1,16 @@
 import { useState, type FocusEvent, type FormEvent } from 'react'
-import { Send } from 'lucide-react'
+import { Check, Send } from 'lucide-react'
 import { portfolio } from '../data/portfolio'
 
-type FormState = 'idle' | 'loading' | 'error'
+type FormState = 'idle' | 'loading' | 'success' | 'error'
 type FieldName = 'name' | 'email' | 'projectType' | 'budget' | 'deadline' | 'description' | 'reference'
 type FieldErrors = Partial<Record<FieldName, string>>
 
 const REQUIRED_FIELDS: FieldName[] = ['name', 'email', 'projectType', 'budget', 'deadline', 'description']
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? 'https://gaktvjyrdznirvxgsxem.supabase.co'
+const SUPABASE_PUBLISHABLE_KEY =
+  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? 'sb_publishable_1GMgUV7oKU-sWiJ9_1XMIw_SPIcjWN5'
 
 function validateField(field: FieldName, value: string): string | undefined {
   const trimmed = value.trim()
@@ -42,27 +46,83 @@ function validate(form: HTMLFormElement): FieldErrors {
 
 export function ContactForm() {
   const [status, setStatus] = useState<FormState>('idle')
+  const [statusMessage, setStatusMessage] = useState<string>('')
   const [errors, setErrors] = useState<FieldErrors>({})
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const formData = new FormData(event.currentTarget)
+    const form = event.currentTarget
+    const formData = new FormData(form)
     // Honeypot check against automated spam bots
     if (String(formData.get('website') ?? '').trim()) {
       return
     }
-    const nextErrors = validate(event.currentTarget)
+    const nextErrors = validate(form)
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length) {
-      event.currentTarget.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus()
+      form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus()
       return
     }
+
     setStatus('loading')
-    await new Promise((resolve) => window.setTimeout(resolve, 350))
-    setStatus('error')
+    setStatusMessage('')
+
+    const referenceRaw = String(formData.get('reference') ?? '').trim()
+    const payload = {
+      name: String(formData.get('name') ?? '').trim(),
+      email: String(formData.get('email') ?? '').trim(),
+      project_type: String(formData.get('projectType') ?? '').trim(),
+      budget: String(formData.get('budget') ?? '').trim(),
+      deadline: String(formData.get('deadline') ?? '').trim(),
+      description: String(formData.get('description') ?? '').trim(),
+      reference_url: referenceRaw || null,
+    }
+
+    try {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/inquiries`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SUPABASE_PUBLISHABLE_KEY,
+          Prefer: 'return=minimal',
+        },
+        body: JSON.stringify(payload),
+      })
+
+      if (!response.ok) {
+        let customMessage = ''
+        try {
+          const errorBody = (await response.json()) as { code?: string; message?: string }
+          if (errorBody.code === 'P0001' && errorBody.message) {
+            customMessage = errorBody.message
+          }
+        } catch {
+          // Ignore JSON parse errors on non-JSON error responses
+        }
+        setStatus('error')
+        setStatusMessage(
+          customMessage || `Could not send inquiry right now. Please email ${portfolio.personal.email} directly.`,
+        )
+        return
+      }
+
+      form.reset()
+      setErrors({})
+      setStatus('success')
+      setStatusMessage('Inquiry sent! Thank you — Nabin will review your project details and reply soon.')
+    } catch {
+      setStatus('error')
+      setStatusMessage(`Network error while sending inquiry. Please email ${portfolio.personal.email} directly.`)
+    }
   }
 
-  const clearError = (field: FieldName) => setErrors((current) => ({ ...current, [field]: undefined }))
+  const clearError = (field: FieldName) => {
+    setErrors((current) => ({ ...current, [field]: undefined }))
+    if (status === 'success' || status === 'error') {
+      setStatus('idle')
+      setStatusMessage('')
+    }
+  }
 
   const checkOnBlur = (field: FieldName) => (event: FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const error = validateField(field, event.currentTarget.value)
@@ -121,9 +181,16 @@ export function ContactForm() {
         <input id="reference" name="reference" type="url" maxLength={500} autoCorrect="off" autoCapitalize="off" spellCheck={false} placeholder="https://…" aria-invalid={Boolean(errors.reference)} aria-describedby={errors.reference ? 'reference-error' : undefined} onChange={() => clearError('reference')} onBlur={checkOnBlur('reference')} />
         {errors.reference && <span className="field-error" id="reference-error">{errors.reference}</span>}
       </div>
-      <button className="submit-button" type="submit" disabled={status === 'loading'}>{status === 'loading' ? 'Checking form…' : 'Send inquiry'}<Send aria-hidden="true" /></button>
-      <p className={`form-status ${status === 'error' ? 'is-error' : ''}`} id="form-status" aria-live="polite">
-        {status === 'error' ? `Message delivery is not connected yet. Please email ${portfolio.personal.email} directly.` : 'Required fields are marked *. Form delivery is a documented TODO until a backend is connected.'}
+      <button className="submit-button" type="submit" disabled={status === 'loading'}>
+        {status === 'loading' ? 'Sending inquiry…' : status === 'success' ? 'Inquiry sent' : 'Send inquiry'}
+        {status === 'success' ? <Check aria-hidden="true" /> : <Send aria-hidden="true" />}
+      </button>
+      <p
+        className={`form-status ${status === 'error' ? 'is-error' : status === 'success' ? 'is-success' : ''}`}
+        id="form-status"
+        aria-live="polite"
+      >
+        {statusMessage || 'Required fields are marked *. Your inquiry is securely stored via Supabase.'}
       </p>
     </form>
   )

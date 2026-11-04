@@ -24,7 +24,7 @@ const PRODUCTION_CSP = [
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: https://nepaltheheaven.github.io",
   "media-src 'self'",
-  "connect-src 'self'",
+  "connect-src 'self' https://gaktvjyrdznirvxgsxem.supabase.co",
   "worker-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
