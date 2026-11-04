@@ -121,7 +121,7 @@ export const portfolio: PortfolioData = {
     monogram: 'NP',
     roles: ['DaVinci Resolve Video Editor', 'IT Student', 'Flutter Developer'],
     location: 'Nepal',
-    email: 'TODO: Add professional email',
+    email: 'nirajpaudel944@gmail.com',
     availability: 'Available for select projects',
     introduction: 'I’m Nabin Paudel, a video editor, IT student, and mobile application developer from Nepal. I enjoy shaping raw footage into focused stories and turning practical ideas into thoughtful mobile experiences. Hackathons taught me to move from ambiguity to a working product, while editing taught me that rhythm, detail, and empathy can transform how an audience feels. Those disciplines now meet in everything I build: clear structure, purposeful motion, and a strong respect for the person on the other side of the screen. I’m always learning, refining, and looking for work that deserves careful execution.',
   },
@@ -137,7 +137,8 @@ export const portfolio: PortfolioData = {
     { label: 'Contact', href: '/contact', step: '05' },
   ],
   socialLinks: [
-    { label: 'GitHub', href: 'TODO: Add GitHub URL' }, { label: 'LinkedIn', href: 'TODO: Add LinkedIn URL' },
+    { label: 'GitHub', href: 'https://github.com/NepalTheHeaven' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nabin-paudel-video-editor' },
     { label: 'WhatsApp', href: 'TODO: Add WhatsApp URL' },
   ],
   videoProjects,

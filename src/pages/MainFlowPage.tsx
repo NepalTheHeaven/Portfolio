@@ -7,6 +7,7 @@ import {
   useFlowNavigation,
   type SectionRoute,
 } from '../context/FlowNavigationContext'
+import { portfolio } from '../data/portfolio'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { HomePage } from './HomePage'
 import { WorkPage } from './WorkPage'
@@ -50,6 +51,11 @@ export function MainFlowPage() {
       '@context': 'https://schema.org',
       '@type': 'Person',
       name: 'Nabin Paudel',
+      email: `mailto:${portfolio.personal.email}`,
+      sameAs: [
+        'https://github.com/NepalTheHeaven',
+        'https://www.linkedin.com/in/nabin-paudel-video-editor',
+      ],
       jobTitle: ['Video Editor', 'Mobile Application Developer'],
       address: { '@type': 'PostalAddress', addressCountry: 'NP' },
     },

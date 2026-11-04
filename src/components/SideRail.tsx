@@ -11,6 +11,8 @@ import {
 export function SideRail() {
   const { pathname } = useLocation()
   const { activeSection } = useFlowNavigation()
+  const githubLink = portfolio.socialLinks.find((item) => item.label === 'GitHub')?.href ?? 'https://github.com/NepalTheHeaven'
+  const linkedinLink = portfolio.socialLinks.find((item) => item.label === 'LinkedIn')?.href ?? 'https://www.linkedin.com/in/nabin-paudel-video-editor'
 
   const isRouteActive = (href: string) => {
     if (isSectionRoute(pathname)) {
@@ -55,8 +57,8 @@ export function SideRail() {
           })}
         </nav>
         <div className="rail-socials" aria-label="Social links">
-          <span aria-label="GitHub link coming soon"><GitFork aria-hidden="true" /></span>
-          <span aria-label="LinkedIn link coming soon"><BriefcaseBusiness aria-hidden="true" /></span>
+          <a href={githubLink} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" data-magnetic><GitFork aria-hidden="true" /></a>
+          <a href={linkedinLink} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" data-magnetic><BriefcaseBusiness aria-hidden="true" /></a>
           <Link to="/contact" onClick={() => handleRailClick('/contact')} aria-label="Contact Nabin" data-magnetic><Mail aria-hidden="true" /></Link>
         </div>
       </div>

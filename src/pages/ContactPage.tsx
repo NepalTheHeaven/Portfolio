@@ -10,6 +10,9 @@ interface ContactPageProps {
 }
 
 export function ContactPage({ embedded = false }: ContactPageProps) {
+  const githubLink = portfolio.socialLinks.find((item) => item.label === 'GitHub')?.href ?? 'https://github.com/NepalTheHeaven'
+  const linkedinLink = portfolio.socialLinks.find((item) => item.label === 'LinkedIn')?.href ?? 'https://www.linkedin.com/in/nabin-paudel-video-editor'
+
   usePageMeta({
     title: 'Let’s Create Something That Moves',
     description: 'Contact Nabin Paudel for video editing, colour grading, Flutter development, and mobile UI implementation.',
@@ -29,10 +32,31 @@ export function ContactPage({ embedded = false }: ContactPageProps) {
         <ContactForm />
       </section>
       <section className="contact-details" aria-label="Contact details">
-        <div><i><Mail aria-hidden="true" /></i><span><small>Email</small>{portfolio.personal.email}</span></div>
-        <div><i><Network aria-hidden="true" /></i><span><small>LinkedIn</small>TODO: Add LinkedIn URL</span></div>
-        <div><i><Code2 aria-hidden="true" /></i><span><small>GitHub</small>TODO: Add GitHub URL</span></div>
-        <div><i><MapPin aria-hidden="true" /></i><span><small>Location</small>{portfolio.personal.location}</span></div>
+        <div>
+          <i><Mail aria-hidden="true" /></i>
+          <span>
+            <small>Email</small>
+            <a href={`mailto:${portfolio.personal.email}`}>{portfolio.personal.email}</a>
+          </span>
+        </div>
+        <div>
+          <i><Network aria-hidden="true" /></i>
+          <span>
+            <small>LinkedIn</small>
+            <a href={linkedinLink} target="_blank" rel="noopener noreferrer">linkedin.com/in/nabin-paudel-video-editor</a>
+          </span>
+        </div>
+        <div>
+          <i><Code2 aria-hidden="true" /></i>
+          <span>
+            <small>GitHub</small>
+            <a href={githubLink} target="_blank" rel="noopener noreferrer">github.com/NepalTheHeaven</a>
+          </span>
+        </div>
+        <div>
+          <i><MapPin aria-hidden="true" /></i>
+          <span><small>Location</small>{portfolio.personal.location}</span>
+        </div>
       </section>
       <SiteFooter />
     </div>

@@ -1,5 +1,6 @@
 import { useState, type FocusEvent, type FormEvent } from 'react'
 import { Send } from 'lucide-react'
+import { portfolio } from '../data/portfolio'
 
 type FormState = 'idle' | 'loading' | 'error'
 type FieldName = 'name' | 'email' | 'projectType' | 'budget' | 'deadline' | 'description' | 'reference'
@@ -116,7 +117,7 @@ export function ContactForm() {
       </div>
       <button className="submit-button" type="submit" disabled={status === 'loading'}>{status === 'loading' ? 'Checking form…' : 'Send inquiry'}<Send aria-hidden="true" /></button>
       <p className={`form-status ${status === 'error' ? 'is-error' : ''}`} id="form-status" aria-live="polite">
-        {status === 'error' ? 'Message delivery is not connected yet. Your details were not sent. Use the email contact once Nabin adds it.' : 'Required fields are marked *. Form delivery is a documented TODO until a backend is connected.'}
+        {status === 'error' ? `Message delivery is not connected yet. Please email ${portfolio.personal.email} directly.` : 'Required fields are marked *. Form delivery is a documented TODO until a backend is connected.'}
       </p>
     </form>
   )

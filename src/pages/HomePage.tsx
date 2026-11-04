@@ -23,7 +23,18 @@ export function HomePage({ embedded = false }: HomePageProps) {
   usePageMeta({
     title: 'Video Editor & Mobile App Developer',
     description: 'Nabin Paudel cuts stories and builds mobile products — video editing and application development from Nepal.',
-    structuredData: { '@context': 'https://schema.org', '@type': 'Person', name: 'Nabin Paudel', jobTitle: ['Video Editor', 'Mobile Application Developer'], address: { '@type': 'PostalAddress', addressCountry: 'NP' } },
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Nabin Paudel',
+      email: `mailto:${portfolio.personal.email}`,
+      sameAs: [
+        'https://github.com/NepalTheHeaven',
+        'https://www.linkedin.com/in/nabin-paudel-video-editor',
+      ],
+      jobTitle: ['Video Editor', 'Mobile Application Developer'],
+      address: { '@type': 'PostalAddress', addressCountry: 'NP' },
+    },
     disabled: embedded,
   })
   return (
